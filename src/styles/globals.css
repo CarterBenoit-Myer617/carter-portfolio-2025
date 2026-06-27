@@ -1,0 +1,336 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* -- Design System Foundation -- */
+
+  /* DARK MODE COLOR SYSTEM */
+  --bg-primary: #0A0A0A;        /* Near-black background */
+  --bg-secondary: #121212;      /* Card/section backgrounds */
+  --bg-elevated: #1A1A1A;       /* Hover states, overlays */
+  --bg-accent: #2C1B35;         /* Purple accent */
+  
+  --text-primary: #FFFFFF;      /* Headlines, primary text */
+  --text-secondary: #A1A1AA;    /* Body text, descriptions */
+  --text-muted: #6A7282;        /* Labels, metadata */
+  --text-accent: #99A1AF;       /* Tags, subtle text */
+  
+  --border-primary: #27272A;    /* Dividers, card borders */
+  --border-subtle: #1F1F23;     /* Subtle separators */
+  
+  --accent-white: #FFFFFF;      /* CTAs, highlights */
+  --accent-purple: #2C1B35;     /* Brand accent */
+
+  /* Spacing (8px grid) */
+  --space-0-5: 0.25rem; /* 4px */
+  --space-1: 0.5rem;   /* 8px */
+  --space-1-5: 0.75rem; /* 12px */
+  --space-2: 1rem;     /* 16px */
+  --space-2-5: 1.25rem; /* 20px */
+  --space-3: 1.5rem;   /* 24px */
+  --space-4: 2rem;     /* 32px */
+  --space-5: 2.5rem;   /* 40px */
+  --space-6: 3rem;     /* 48px */
+  --space-8: 4rem;     /* 64px */
+  --space-10: 5rem;    /* 80px */
+  --space-12: 6rem;    /* 96px */
+  --space-16: 8rem;    /* 128px */
+  --space-20: 10rem;   /* 160px */
+
+  /* Typography Scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+  --text-7xl: 4.5rem;     /* 72px */
+  --text-8xl: 6rem;       /* 96px */
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Existing ShadCN / Tailwind Defaults */
+  --font-size: 16px;
+  --background: #0A0A0A;
+  --foreground: #FFFFFF;
+  --card: #121212;
+  --card-foreground: #FFFFFF;
+  --popover: #121212;
+  --popover-foreground: #FFFFFF;
+  --primary: #FFFFFF;
+  --primary-foreground: #0A0A0A;
+  --secondary: #121212;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1A1A1A;
+  --muted-foreground: #A1A1AA;
+  --accent: #2C1B35;
+  --accent-foreground: #FFFFFF;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: #27272A;
+  --input: transparent;
+  --input-background: #121212;
+  --switch-background: #27272A;
+  --ring: #6A7282;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: #121212;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FFFFFF;
+  --sidebar-primary-foreground: #0A0A0A;
+  --sidebar-accent: #1A1A1A;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #27272A;
+  --sidebar-ring: #6A7282;
+}
+
+.dark {
+  --background: #0A0A0A;
+  --foreground: #FFFFFF;
+  --card: #121212;
+  --card-foreground: #FFFFFF;
+  --popover: #121212;
+  --popover-foreground: #FFFFFF;
+  --primary: #FFFFFF;
+  --primary-foreground: #0A0A0A;
+  --secondary: #121212;
+  --secondary-foreground: #FFFFFF;
+  --muted: #1A1A1A;
+  --muted-foreground: #A1A1AA;
+  --accent: #2C1B35;
+  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: #27272A;
+  --input: #121212;
+  --ring: #6A7282;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: #121212;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FFFFFF;
+  --sidebar-primary-foreground: #0A0A0A;
+  --sidebar-accent: #1A1A1A;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #27272A;
+  --sidebar-ring: #6A7282;
+}
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  
+  /* Semantic Aliases requested by architect */
+  --color-surface: var(--card);
+  --color-text: var(--foreground);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Spacing Tokens */
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-10: var(--space-10);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --spacing-20: var(--space-20);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply bg-[#0A0A0A] antialiased;
+    font-size: var(--font-size);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Hide skip to main content link */
+  a[href="#main"],
+  a[href="#main-content"],
+  .skip-to-main,
+  .bypass-link,
+  [role="link"][tabindex="0"]:first-child {
+    display: none !important;
+  }
+
+  /* Typography with dark mode colors */
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-white;
+  }
+
+  p {
+    @apply text-[#A1A1AA];
+  }
+
+  a {
+    @apply text-white transition-opacity duration-200;
+  }
+
+  a:hover {
+    @apply opacity-70;
+  }
+
+  /* Labels & Meta */
+  .label, .meta, .tag {
+    @apply text-[#6A7282] uppercase tracking-[1.2px];
+  }
+
+  /* Borders */
+  .border-bottom {
+    border-bottom: 1px solid var(--border-primary);
+  }
+
+  .border-top {
+    border-top: 1px solid var(--border-primary);
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      @apply text-[64px] font-semibold leading-[1.1] text-center;
+    }
+
+    h2 {
+      @apply text-[40px] font-semibold leading-[1.2];
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p, li {
+      @apply text-[18px] font-normal leading-[1.5] max-w-[720px];
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      @apply text-[16px] font-bold uppercase tracking-[2px];
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+/* Responsive Mobile Adjustments */
+@media (max-width: 768px) {
+  html, body {
+    background-color: var(--bg-primary);
+  }
+  
+  h1 {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+
+  
+  /* No hover states on mobile */
+  .card:hover {
+    background: var(--bg-secondary);
+  }
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.slide-track {
+  animation: scroll 20s linear infinite;
+}
+
+.slide-track:hover {
+  animation-play-state: paused;
+}
