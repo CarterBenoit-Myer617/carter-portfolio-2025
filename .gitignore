@@ -25,3 +25,13 @@ video/
 # editor
 .cursor/
 src/assets/*.png
+*.png
+*.zip
+_archive/
+carter-portfolio-2025-2/
+carter-portfolio-2025-3/
+carter-portfolio-2025/
+carter-portfolio-assets/
+carterbenoitmyer.com/
+mcp-google-workspace/
+resume-system/
