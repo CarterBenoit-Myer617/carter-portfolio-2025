@@ -1,0 +1,462 @@
+{
+  "siteInfo": {
+    "name": "Carter Beno\u00eet-Myer",
+    "title": "Systems Designer & Brand Architect",
+    "hero": "I build modular design infrastructure for cultural institutions and mission-led brands. By applying athletic rigor to visual systems, I ensure technical clarity, cultural preservation, and scalable growth.",
+    "about": {
+      "heading": "MISSION: CLARITY AS CARE",
+      "body": "My practice is built on three nodes: Systems, Culture, and Clarity. I transform complex organizational narratives into functional design tools. Whether it's a brand system for a Philadelphia museum or a digital showcase for a university, I design for longevity, accessibility, and economic sovereignty."
+    },
+    "navigation": {
+      "work": "View Systems",
+      "about": "Methodology",
+      "contact": "Contact"
+    },
+    "cta": "Let's build a system together"
+  },
+  "taxonomy": {
+    "lenses": [
+      {
+        "name": "Systems",
+        "description": "Design as infrastructure: modularity, logic, scalability, repeatability."
+      },
+      {
+        "name": "Culture",
+        "description": "Design grounded in people/place/power: community, identity, narrative, context."
+      },
+      {
+        "name": "Clarity",
+        "description": "Design as care: accessibility, hierarchy, restraint, readability."
+      }
+    ]
+  },
+  "studioPage": {
+    "heading": "SELECTED SYSTEMS",
+    "subheading": "A curation of high-signal projects focused on brand infrastructure, digital logic, and cultural identity.",
+    "filters": ["All", "Identity", "Publication", "Web", "Product", "Motion"],
+    "displayMode": "grid"
+  },
+  "aboutPage": {
+    "sections": [
+      {
+        "id": "bio",
+        "heading": "ABOUT",
+        "content": "Carter Benoît-Myer is a systems designer and brand architect based in Philadelphia. With a background in graphic design and high-performance athletics, Carter brings disciplined rigor to visual infrastructure—building modular design systems for cultural institutions, mission-led brands, and community organizations.",
+        "mediaType": "image",
+        "mediaId": "ABOUT_PORTRAIT"
+      },
+      {
+        "id": "methodology",
+        "heading": "METHODOLOGY",
+        "content": "My practice is built on three nodes: Systems, Culture, and Clarity. I transform complex organizational narratives into functional design tools. Whether it's a brand system for a Philadelphia museum or a digital showcase for a university, I design for longevity, accessibility, and economic sovereignty.",
+        "mediaType": "diagram",
+        "mediaId": "THREE_LENSES_DIAGRAM"
+      },
+      {
+        "id": "credentials",
+        "heading": "EXPERIENCE",
+        "items": [
+          "BFA Graphic Design, Drexel University",
+          "Lead Designer, AAMP Brand System",
+          "Design Systems Specialist",
+          "Philadelphia, PA"
+        ]
+      }
+    ]
+  },
+  "processPage": {
+    "heading": "PROCESS",
+    "subheading": "How I build design infrastructure",
+    "steps": [
+      {
+        "number": "01",
+        "title": "RESEARCH & AUDIT",
+        "description": "Stakeholder interviews, visual audits, and identifying systemic inconsistencies in current materials."
+      },
+      {
+        "number": "02",
+        "title": "SYSTEM ARCHITECTURE",
+        "description": "Defining core components, hierarchies, and modular rules that scale across touchpoints."
+      },
+      {
+        "number": "03",
+        "title": "DESIGN & ITERATION",
+        "description": "Building templates, testing flexibility, and refining for accessibility and cultural context."
+      },
+      {
+        "number": "04",
+        "title": "DOCUMENTATION & HANDOFF",
+        "description": "Creating usage guides, component libraries, and ensuring internal teams can adopt and maintain the system."
+      }
+    ]
+  },
+  "contactPage": {
+    "heading": "LET'S BUILD A SYSTEM TOGETHER",
+    "email": "carter@carterbenoitmyer.com",
+    "social": [
+      {
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com/in/carterbenoitmyer"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://instagram.com/carterbenoitmyer"
+      }
+    ]
+  },
+  "selectedWork": [
+    {
+      "slot": 1,
+      "projectId": "AAMP_2024",
+      "thumbnailId": "AAMP_2024_HERO",
+      "reason": "Cultural institution identity + repeatable system (Culture+Systems).",
+      "tone": "Grounded",
+      "visualTag": "Type-led",
+      "ctaLabel": "View Case Study"
+    },
+    {
+      "slot": 2,
+      "projectId": "DREXEL_SHOWCASE_WEB_2024",
+      "thumbnailId": "DREXEL_SHOWCASE_WEB_2024_HERO",
+      "reason": "Web system + accessibility; proves digital execution.",
+      "tone": "Calm",
+      "visualTag": "Minimal",
+      "ctaLabel": "View Case Study"
+    },
+    {
+      "slot": 3,
+      "projectId": "ROAM_2024",
+      "thumbnailId": "ROAM_2024_HERO",
+      "reason": "Editorial system in subculture context; shows range.",
+      "tone": "Bold",
+      "visualTag": "Image-led",
+      "ctaLabel": "View Case Study"
+    },
+    {
+      "slot": 4,
+      "projectId": "BASQUIAT_2024",
+      "thumbnailId": "BASQUIAT_2024_HERO",
+      "reason": "High-clarity publication design; typographic discipline.",
+      "tone": "Reflective",
+      "visualTag": "Type-led",
+      "ctaLabel": "View Case Study"
+    },
+    {
+      "slot": 5,
+      "projectId": "ANANSI_2025",
+      "thumbnailId": "ANANSI_2025_HERO",
+      "reason": "Product graphics + cultural narrative; outdoor lane.",
+      "tone": "High-Energy",
+      "visualTag": "Warm",
+      "ctaLabel": "View Case Study"
+    },
+    {
+      "slot": 6,
+      "projectId": "FLAVIEN_POSTERS_2024",
+      "thumbnailId": "FLAVIEN_POSTERS_2024_HERO",
+      "reason": "Focused typographic studies; keep as supporting proof.",
+      "tone": "Bold",
+      "visualTag": "Motion-led",
+      "ctaLabel": "See Studies"
+    }
+  ],
+  "projects": [
+    {
+      "id": "AAMP_2024",
+      "slug": "african-american-museum-philadelphia-brand-system",
+      "title": "Brand System for the African American Museum of Philadelphia (AAMP)",
+      "shortTitle": "AAMP Brand System",
+      "year": 2024,
+      "category": "Identity",
+      "tier": 1,
+      "status": "Draft",
+      "verdict": "\u2b50 FEATURE",
+      "lenses": {
+        "primary": "Culture",
+        "secondary": "Systems",
+        "scores": {
+          "systems": 4,
+          "culture": 5,
+          "clarity": 3,
+          "total": 12
+        }
+      },
+      "content": {
+        "abstract": "Define the visual rules (type, marks, grid, color) so the museum can publish consistently across programs without design drift.",
+        "systemLogic": "Center Black narratives with respect\u2014no museum \u201cdust.\u201d Use design to keep the institution alive in the city\u2019s present tense.",
+        "culturalContext": "Deliverables: logo + wordmark, type system, color rules, templates (social, signage, print).",
+        "outcomeProof": "Lead Designer, Strategist"
+      },
+      "meta": {
+        "roles": "Figma, Adobe CC",
+        "tools": "museum branding, cultural institution, brand system, Philadelphia",
+        "keywords": "brand systems, cultural preservation, clarity as care"
+      },
+      "copyStatus": "Add real project URL + media URLs from Adobe Portfolio."
+    },
+    {
+      "id": "ROAM_2024",
+      "slug": "roam-skateboard-publication-editorial-system",
+      "title": "Editorial System for ROAM: International Skateboard Publication",
+      "shortTitle": "ROAM Publication",
+      "year": 2024,
+      "category": "Publication",
+      "tier": 2,
+      "status": "Draft",
+      "verdict": "\u2b50 FEATURE",
+      "lenses": {
+        "primary": "Culture",
+        "secondary": "Systems",
+        "scores": {
+          "systems": 4,
+          "culture": 4,
+          "clarity": 3,
+          "total": 11
+        }
+      },
+      "content": {
+        "abstract": "Build a modular editorial system that highlights skateboarding as a geopolitical lens—revealing how communities form identity across borders, language, and political systems.",
+        "systemLogic": "Design a layout framework that prioritizes photography and first-person narratives. The grid adapts to varied content while maintaining typographic discipline and visual rhythm.",
+        "culturalContext": "ROAM documents skating communities in contested or marginalized spaces—from Gaza to Havana. The design treats these stories with journalistic rigor, avoiding exoticization. The system emphasizes commonalities over politics.",
+        "outcomeProof": "Designer"
+      },
+      "meta": {
+        "roles": "InDesign, Photoshop, Figma",
+        "tools": "editorial design, skate publication, layout system",
+        "keywords": "editorial systems, humanitarian design, geopolitical narratives, typographic hierarchy"
+      },
+      "copyStatus": "Confirm whether ROAM is client or self-initiated; add URLs."
+    },
+    {
+      "id": "BASQUIAT_2024",
+      "slug": "basquiat-art-catalogue-publication-design",
+      "title": "Art Catalogue Design: BASQUIAT (Publication System)",
+      "shortTitle": "BASQUIAT Catalogue",
+      "year": 2024,
+      "category": "Publication",
+      "tier": 2,
+      "status": "Draft",
+      "verdict": "\u2b50 FEATURE",
+      "lenses": {
+        "primary": "Culture",
+        "secondary": "Clarity",
+        "scores": {
+          "systems": 3,
+          "culture": 4,
+          "clarity": 4,
+          "total": 11
+        }
+      },
+      "content": {
+        "abstract": "Use typographic rhythm, grids, and image handling rules to create consistency across sections while letting artworks breathe.",
+        "systemLogic": "Honor cultural legacy without over-stylizing. Design acts as a frame for the work and its context.",
+        "culturalContext": "Deliverables: grid + type system, sample spreads, cover, print-ready export specs.",
+        "outcomeProof": "Designer"
+      },
+      "meta": {
+        "roles": "InDesign, Photoshop",
+        "tools": "art catalogue, publication design, typography",
+        "keywords": "publication systems, cultural context, clarity"
+      },
+      "copyStatus": "Add actual context (exhibition? study?) and project URL."
+    },
+    {
+      "id": "ANANSI_2025",
+      "slug": "anansi-afrofuturist-snowboard-graphics",
+      "title": "Afro\u2011Futurist Snowboard Graphics: Anansi the Spider",
+      "shortTitle": "Anansi Snowboard",
+      "year": 2025,
+      "category": "Product",
+      "tier": 3,
+      "status": "Draft",
+      "verdict": "\u2b50 FEATURE",
+      "lenses": {
+        "primary": "Culture",
+        "secondary": "Systems",
+        "scores": {
+          "systems": 3,
+          "culture": 5,
+          "clarity": 3,
+          "total": 11
+        }
+      },
+      "content": {
+        "abstract": "Define the graphic rules (motifs, line weights, contrasts) so the concept can extend to variants, merch, or campaigns.",
+        "systemLogic": "Use narrative and symbolism with intention\u2014not costume. Let the story lead the form.",
+        "culturalContext": "Deliverables: board graphics, color variants, mockups, optional poster/launch assets.",
+        "outcomeProof": "Designer"
+      },
+      "meta": {
+        "roles": "Illustrator, Photoshop",
+        "tools": "snowboard graphics, product design, Afrofuturism",
+        "keywords": "cultural narrative, product graphics, visual systems"
+      },
+      "copyStatus": "Add images and any collaboration details."
+    },
+    {
+      "id": "FLAVIEN_POSTERS_2024",
+      "slug": "flavien-berger-concert-poster-series",
+      "title": "Concert Poster Series for Flavien Berger (Typographic Studies)",
+      "shortTitle": "Flavien Berger Posters",
+      "year": 2024,
+      "category": "Motion",
+      "tier": 4,
+      "status": "Draft",
+      "verdict": "\u2705 KEEP",
+      "lenses": {
+        "primary": "Clarity",
+        "secondary": "Culture",
+        "scores": {
+          "systems": 2,
+          "culture": 3,
+          "clarity": 4,
+          "total": 9
+        }
+      },
+      "content": {
+        "abstract": "Show the design system behind the series: type rules, grid choices, and variants.",
+        "systemLogic": "Music culture sets tone; design stays disciplined and readable.",
+        "culturalContext": "Deliverables: poster set, variants, mockups, optional motion studies.",
+        "outcomeProof": "Designer"
+      },
+      "meta": {
+        "roles": "Illustrator, Photoshop",
+        "tools": "concert posters, typography, visual rhythm",
+        "keywords": "typographic systems, clarity, motion studies"
+      },
+      "copyStatus": "If these are static posters, set Category=Publication or Identity; adjust."
+    },
+    {
+      "id": "DREXEL_SHOWCASE_WEB_2024",
+      "slug": "drexel-senior-showcase-website-design-system",
+      "title": "Website Design System for Drexel Graphic Design Senior Showcase (2024)",
+      "shortTitle": "Drexel Senior Showcase Site",
+      "year": 2024,
+      "category": "Web",
+      "tier": 1,
+      "status": "Draft",
+      "verdict": "\u2705 KEEP",
+      "lenses": {
+        "primary": "Systems",
+        "secondary": "Clarity",
+        "scores": {
+          "systems": 4,
+          "culture": 2,
+          "clarity": 4,
+          "total": 10
+        }
+      },
+      "content": {
+        "abstract": "Define components and content rules so the site stays coherent as many people contribute content.",
+        "systemLogic": "Support a community narrative (the class) without flattening individual voices.",
+        "culturalContext": "Deliverables: site IA, UI kit/components, templates, responsive layouts, launch build.",
+        "outcomeProof": "Designer, Web"
+      },
+      "meta": {
+        "roles": "Figma, Webflow/HTML/CSS (as applicable)",
+        "tools": "web design, design system, showcase website",
+        "keywords": "design systems, accessibility, information architecture"
+      },
+      "copyStatus": "Confirm build platform + your role (solo/lead/team)."
+    },
+    {
+      "id": "CYMATIC_2023",
+      "slug": "cymatic-synergy-animated-poster-studies",
+      "title": "Animated Poster Studies: Cymatic Synergy",
+      "shortTitle": "Cymatic Synergy",
+      "year": 2023,
+      "category": "Motion",
+      "tier": 4,
+      "status": "Draft",
+      "verdict": "\ud83d\udcc2 ARCHIVE",
+      "lenses": {
+        "primary": "Clarity",
+        "secondary": "Systems",
+        "scores": {
+          "systems": 1,
+          "culture": 1,
+          "clarity": 3,
+          "total": 5
+        }
+      },
+      "content": {
+        "abstract": "If kept, frame as a controlled study: constraints, iterations, what the motion system teaches you.",
+        "systemLogic": "Keep culture references honest; don\u2019t force meaning if it\u2019s mainly formal exploration.",
+        "culturalContext": "Deliverables: motion studies, frames, short loops.",
+        "outcomeProof": "Designer"
+      },
+      "meta": {
+        "roles": "After Effects",
+        "tools": "motion posters, animation study",
+        "keywords": "motion systems, experimentation"
+      },
+      "copyStatus": "If you rewrite as \u201cresearch\u201d, you can promote later."
+    },
+    {
+      "id": "VESPER_2023",
+      "slug": "vesper-boat-club-logo-rebrand",
+      "title": "Logo Refresh for Vesper Boat Club",
+      "shortTitle": "Vesper Boat Club",
+      "year": 2023,
+      "category": "Identity",
+      "tier": 4,
+      "status": "Draft",
+      "verdict": "\ud83d\udcc2 ARCHIVE",
+      "lenses": {
+        "primary": "Systems",
+        "secondary": "Clarity",
+        "scores": {
+          "systems": 2,
+          "culture": 1,
+          "clarity": 2,
+          "total": 5
+        }
+      },
+      "content": {
+        "abstract": "If you want this in the main index, show system thinking: usage rules, lockups, accessibility, applications.",
+        "systemLogic": "Avoid generic \u201cheritage\u201d language unless you can ground it in real context.",
+        "culturalContext": "Deliverables: logo, lockups, usage guide, sample applications.",
+        "outcomeProof": "Designer"
+      },
+      "meta": {
+        "roles": "Illustrator",
+        "tools": "logo design, rebrand",
+        "keywords": "brand systems, clarity"
+      },
+      "copyStatus": "Consider moving to a \u201cBrand Studies\u201d section."
+    },
+    {
+      "id": "STUDENT_WORK_PRE2023",
+      "slug": "student-work-archive",
+      "title": "Student Work Archive (Pre\u20112023)",
+      "shortTitle": "Student Work Archive",
+      "year": 2021,
+      "category": "Lab",
+      "tier": 4,
+      "status": "Draft",
+      "verdict": "\u274c DROP",
+      "lenses": {
+        "primary": "",
+        "secondary": "",
+        "scores": {
+          "systems": 1,
+          "culture": 1,
+          "clarity": 1,
+          "total": 3
+        }
+      },
+      "content": {
+        "abstract": "",
+        "systemLogic": "",
+        "culturalContext": "",
+        "outcomeProof": ""
+      },
+      "meta": {
+        "roles": "",
+        "tools": "",
+        "keywords": ""
+      },
+      "copyStatus": ""
+    }
+  ]
+}
