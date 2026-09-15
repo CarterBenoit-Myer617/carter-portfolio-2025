@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 // ═══════════════════════════════════════════
 //  PAGE HERO — Global Design System Component
@@ -106,7 +106,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                   {crumb.to ? (
                     <Link
                       to={crumb.to}
-                      className="font-['Inter',sans-serif] font-normal text-[12px] md:text-[14px] leading-[20px] tracking-[1.4px] uppercase text-white hover:text-white/70 transition-colors"
+                      className="font-['Inter',sans-serif] font-normal text-[12px] md:text-[14px] leading-[20px] tracking-[1.4px] uppercase text-white hover:text-white/70 transition-colors inline-flex items-center min-h-11"
                     >
                       {crumb.label}
                     </Link>

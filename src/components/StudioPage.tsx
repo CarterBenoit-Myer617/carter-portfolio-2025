@@ -1,355 +1,832 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { StickyNavigation } from './StickyNavigation';
-import { PROJECTS, sortProjects, Project } from '../data/cms';
+import { PROJECTS, DREXEL_COVER_SRCSET } from '../data/cms';
+import { useTranslation } from './LanguageContext';
+import { useSEO } from './useSEO';
+import { VIDEO_DREXEL_FIGMA, VIDEO_DREXEL_LOCAL, VIDEO_VESPER_FIGMA, VIDEO_VESPER_LOCAL } from '../data/media';
+import { PAGE_SEO } from '../data/seo';
 
-// Helper to handle local project mapping and defaults
-const applyProjectOverrides = (items: Project[]): Project[] => {
-  return items.map(p => {
-    const localProject = PROJECTS.find(local => local.slug === p.slug);
-    // Use local asset if available (preserves Figma imports)
-    const base = localProject ? { ...p, src: localProject.src, type: localProject.type } : p;
-    return base;
-  });
-};
+// ═══ Figma project cover images (desktop) ═══
+import imgImageDrexelSeniorShowcase from "figma:asset/3d22c680e7f293997abdc55a4f71f18d7a8fc1b6.png";
+import imgImageAampRebrand from "figma:asset/3b62af53baebff0990f478c6d1c08c7900c9fd78.png";
+import imgVesperCover from "figma:asset/c7be2e95acab629fe1651960c2a0396036e31df5.png";
+import imgImageRoamMedia from "figma:asset/b119114a2287ab8aba30ce069b6c318251fc8425.png";
+import imgImageBasquiatCatalogue from "figma:asset/992105c41f8e07186c19360509164c9e89d382a9.png";
+import imgImageBlackTrailCollective from "figma:asset/c960e1e08c4726671b8e924d6681e8260a83a650.png";
+import imgImageKonaEstateProvenance from "figma:asset/fc22f3a16680f5dd6ad5b4228e744d1b005a6061.png";
+import imgImageFlavienSound from "figma:asset/4aefb8f4b7f310171b67b9e7680be37a6352769d.png";
+import imgImageCymaticStudies from "figma:asset/b54d6b35cbfbdffae5d7f34dfad29887df31e765.png";
 
-export const StudioPage = () => {
-  const navigate = useNavigate();
-  const [hideLogo, setHideLogo] = useState(false);
-  const [projects, setProjects] = useState<Project[]>(() => applyProjectOverrides(PROJECTS));
-  
-  const sortedProjects = React.useMemo(() => sortProjects(projects), [projects]);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      setHideLogo(window.scrollY > 100);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+// ═══ Mobile-specific cover images (Figma mobile frame uses different crops) ═══
+import imgDrexelMobile from "figma:asset/0952adc2a294ca3fe5826c32a6c842890eca2745.png";
+import imgVesperMobile from "figma:asset/01cf8910843310aba94c1ac3673a449c0c5acf16.png";
 
-  const renderItems = () => {
-    const items = [];
-    let projectIndex = 0;
-    
-    const pattern = [
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[90%]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[91%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[87%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[88%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[94%]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[92%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[92%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[85%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[89%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[93%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[86%]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[88%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[91%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[84%]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[95%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[90%]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[87%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[92%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[89%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[85%]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[93%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-      { type: 'right', height: 'md:h-[70vh] h-[50vh]', width: 'w-[88%]' },
-      { type: 'full', height: 'md:h-[70vh] h-[50vh]' },
-      { type: 'left', height: 'md:h-[70vh] h-[50vh]', width: 'w-[86%]' },
-      { type: 'split', height: 'md:h-[70vh] h-auto' },
-    ];
+// ═══ Overlay images (Figma card inner content) ═══
+import imgScreenshotAamp from "figma:asset/2e5a9e5589f617814a005bd70feb129382ca73eb.png";
+import imgAamp2024Cover from "figma:asset/f57093133625582c8bba285886966ed9d33b94c1.png";
+import imgSafeVideo from "figma:asset/79771067dc4b1d2180731a8740d181e1c7407a16.png";
+import imgImg2060 from "figma:asset/13935800951653a5cae2bda85373e6073b24647d.png";
+import imgCarterBenoit2 from "figma:asset/0fcac5110e733ab89fbc05dbbe220f841f3a63f3.png";
+import imgImage24 from "figma:asset/e3e797514fbf211940697131f6fd7b221f2d3e81.png";
+import imgImage20 from "figma:asset/bd7998211af3de495b5362334be78e85d9fbda76.png";
+import imgTwoWhiteCrumpledPostersGrungeWall22 from "figma:asset/1a7c10aa8de24cbacf72344ed0b2ed5d33be952c.png";
 
-    let patternIndex = 0;
-    
-    while (projectIndex < sortedProjects.length) {
-      const layoutType = pattern[patternIndex % pattern.length];
-      const currentProject = sortedProjects[projectIndex];
-      
-      if (layoutType.type === 'full') {
-        items.push(
-          <div key={projectIndex} className={`w-full ${layoutType.height}`}>
-            <GridItem 
-              project={currentProject} 
-              index={projectIndex} 
-            />
+// ═══ Video sources (from Figma frames) ═══
+const VIDEO_DREXEL = VIDEO_DREXEL_LOCAL;
+const VIDEO_VESPER = VIDEO_VESPER_LOCAL;
+const VIDEO_CYMATIC_BTC = "/_videos/v1/aebb6e13cfadb7f93d79486a523aa5c1becbb983";
+
+// ═══════════════════════════════════════════
+//  PROJECT GRID DATA — matches Figma layout
+// ═══════════════════════════════════════════
+
+interface WorkGridItem {
+  title: string;
+  slug: string;
+  image: string;
+  layout: 'full' | 'wide-left' | 'wide-right' | 'half-left' | 'half-right';
+}
+
+const WORK_GRID: WorkGridItem[][] = [
+  // Row 1: Full width
+  [{ title: 'Drexel Senior Showcase', slug: 'drexel-showcase-web', image: imgImageDrexelSeniorShowcase, layout: 'full' }],
+  // Row 2: Wide right
+  [{ title: 'AAMP Rebrand', slug: 'aamp-rebrand', image: imgImageAampRebrand, layout: 'wide-right' }],
+  // Row 3: Two half-width cards
+  [
+    { title: 'Vesper Boat Club', slug: 'vesper-global-rebrand', image: imgVesperCover, layout: 'half-left' },
+    { title: 'ROAM Media', slug: 'roam-media-brand', image: imgImageRoamMedia, layout: 'half-right' },
+  ],
+  // Row 4: Full width
+  [{ title: 'BASQUIAT Catalogue', slug: 'basquiat-catalogue', image: imgImageBasquiatCatalogue, layout: 'full' }],
+  // Row 5: Wide right
+  [{ title: 'Black Trail Collective', slug: 'anansi-snowboard', image: imgImageBlackTrailCollective, layout: 'wide-right' }],
+  // Row 6: Full width
+  [{ title: 'Kona Estate Provenance', slug: 'kona-estate-provenance', image: imgImageKonaEstateProvenance, layout: 'full' }],
+  // Row 7: Two half-width cards
+  [
+    { title: 'Flavien Sound', slug: 'flavien-sound', image: imgImageFlavienSound, layout: 'half-left' },
+    { title: 'Cymatic Studies', slug: 'cymatic-studies', image: imgImageCymaticStudies, layout: 'half-right' },
+  ],
+];
+
+
+// ═══════════════════════════════════════════
+//  DESKTOP OVERLAY CONTENT — per-card Figma-faithful
+//  Each card has a unique inner treatment from the Figma frame
+// ═══════════════════════════════════════════
+
+/** Desktop overlay content rendered on top of the cover image + dark overlay */
+const DesktopCardOverlay: React.FC<{ slug: string }> = ({ slug }) => {
+  switch (slug) {
+    // Drexel: centered vertical video on top of cover
+    case 'drexel-showcase-web':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div className="relative w-full h-full">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              controlsList="nodownload"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full object-cover"
+              style={{ aspectRatio: '1080/1350' }}
+            >
+              <source src={VIDEO_DREXEL} type="video/mp4" />
+              <source src={VIDEO_DREXEL_FIGMA} type="video/mp4" />
+            </video>
           </div>
-        );
-        projectIndex++;
-      } else if (layoutType.type === 'left') {
-        items.push(
-          <div key={projectIndex} className={`${layoutType.width} ${layoutType.height} self-start`}>
-            <GridItem 
-              project={currentProject} 
-              index={projectIndex} 
-            />
-          </div>
-        );
-        projectIndex++;
-      } else if (layoutType.type === 'right') {
-        items.push(
-          <div key={projectIndex} className={`${layoutType.width} ${layoutType.height} self-end`}>
-            <GridItem 
-              project={currentProject} 
-              index={projectIndex} 
-            />
-          </div>
-        );
-        projectIndex++;
-      } else if (layoutType.type === 'split') {
-        if (projectIndex + 1 < sortedProjects.length) {
-          const currentProject2 = sortedProjects[projectIndex + 1];
-          items.push(
-            <div key={`split-${projectIndex}`} className={`w-full ${layoutType.height} flex flex-row max-md:flex-col gap-0`}>
-              <div className="w-1/2 max-md:w-full h-[50vh] md:h-full">
-                <GridItem 
-                  project={currentProject} 
-                  index={projectIndex} 
-                />
-              </div>
-              <div className="w-1/2 max-md:w-full h-[50vh] md:h-full">
-                <GridItem 
-                  project={currentProject2} 
-                  index={projectIndex + 1} 
-                />
-              </div>
-            </div>
-          );
-          projectIndex += 2;
-        } else {
-          items.push(
-            <div key={projectIndex} className={`w-full ${layoutType.height}`}>
-              <GridItem 
-                project={currentProject} 
-                index={projectIndex} 
-              />
-            </div>
-          );
-          projectIndex++;
-        }
-      }
-      
-      patternIndex++;
-    }
-    
-    return items;
-  };
+        </div>
+      );
 
-  return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_center,#1F2937,#0B0F19)] font-['Inter',sans-serif] text-white overflow-x-hidden">
-      <StickyNavigation variant="dark" showLogo={true} />
-      
-      <main className="pt-24 pb-24 md:pb-48 px-4 md:px-8 max-w-[1920px] mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-24 ml-2 md:ml-4 pt-8"
-        >
-          <h1 className="text-6xl md:text-9xl font-normal leading-[0.9] tracking-tight mb-8 text-white">Work</h1>
-          <p className="text-xl md:text-[24px] leading-snug md:leading-[32px] text-[#D1D5DB] max-w-[609px]">
-            A selection of commissioned projects ranging from brand identity to spatial activations and archival research.
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-24 ml-2 md:ml-4 max-w-[760px] border-t border-white/10 pt-10"
-        >
-          <p className="font-['Arial',sans-serif] text-xs tracking-[2px] uppercase text-[#6a7282] mb-6">
-            Philosophy
-          </p>
-          <h2 className="text-4xl md:text-6xl font-normal leading-[0.95] tracking-tight mb-8 text-white">
-            Small Paints
-          </h2>
-          <div className="space-y-5 text-lg md:text-xl leading-relaxed text-[#D1D5DB]">
-            <p>
-              Small Paints is a philosophy of scale — the conviction that the most profound macro experiences are built by caring about the smallest, finite details: a single unpolished brushstroke, a typographic nuance on a poster, the macro texture of a woven fabric.
-            </p>
-            <p>
-              It works as a sandbox for rapid, broad exploration, where quantity breeds quality and unconventional ideas are allowed to breathe — before they're refined, systematized, and scaled into digital and apparel applications.
-            </p>
-            <p>
-              Forged by Vermont and the physical realities of the outdoors, the method doesn't hide its raw materials — it elevates them. Whether mixing physical paint, sketching an outerwear concept, or laying the foundation for a complex interface, the approach is identical: paint small to build big.
-            </p>
-          </div>
-        </motion.div>
-
-        <section className="w-full overflow-x-hidden">
-          <div className="flex flex-col items-end gap-0 max-md:[&>div]:w-full max-md:[&>div.flex]:flex-col max-md:[&>div.flex>div]:w-full [&_.border-white\/20]:border-none">
-            {renderItems()}
-          </div>
-        </section>
-      </main>
-    </div>
-  );
-};
-
-const SafeVideo = ({ src }: { src: string }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(err => {
-        if (err.name === 'AbortError' || err.name === 'NotAllowedError') {
-          return;
-        }
-        console.warn('Video playback failed:', err);
-      });
-    }
-  }, [src]);
-
-  return (
-    <video
-      ref={videoRef}
-      loop
-      muted
-      playsInline
-      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-    >
-      <source src={src} />
-    </video>
-  );
-};
-
-const GridItem = ({ project, index }: { project: Project, index: number }) => {
-  const isYouTube = project.src && project.src.includes('youtu');
-  const showVideo = project.type === 'video' && !isYouTube;
-  
-  let youtubeThumbnail = '';
-  let youtubeID = '';
-  
-  if (isYouTube) {
-     youtubeID = project.src.includes('youtu.be') 
-        ? project.src.split('youtu.be/')[1]
-        : project.src.split('v=')[1];
-        
-    youtubeThumbnail = `https://img.youtube.com/vi/${youtubeID}/maxresdefault.jpg`;
-  }
-
-  return (
-    <Link to={`/studio/${project.slug}`} className="block w-full h-full">
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-        className="relative group overflow-hidden bg-[#111827] cursor-pointer w-full h-full border border-white/20"
-      >
-      <div className="absolute inset-0 w-full h-full bg-black">
-        {showVideo ? (
-          <SafeVideo src={project.src} />
-        ) : isYouTube ? (
-          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+    // AAMP: screenshot inside a brownish/grey frame, centered
+    case 'aamp-rebrand':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute overflow-hidden bg-[#383131]"
+            style={{
+              left: '-8%',
+              right: '-8%',
+              top: '-14%',
+              bottom: '-14%',
+            }}
+          >
             <img
-              src={youtubeThumbnail}
-              alt={project.title}
+              alt=""
+              src={imgScreenshotAamp}
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{
+                left: '2.5%',
+                top: '-19%',
+                width: '95%',
+                height: '100%',
+              }}
+            />
+          </div>
+        </div>
+      );
+
+    // Vesper: white inset with video inside
+    case 'vesper-global-rebrand':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-white overflow-hidden"
+            style={{
+              top: '0.08%',
+              left: '0',
+              right: '-5.6%',
+              bottom: '-5%',
+            }}
+          >
+            <div
+              className="absolute"
+              style={{
+                top: '50%',
+                left: '50%',
+                transform: 'translate(calc(-50% - 10px), calc(-50% + 90px))',
+                width: '737px',
+                aspectRatio: '737/1185',
+              }}
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                controlsList="nodownload"
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source src={VIDEO_VESPER} type="video/mp4" />
+                <source src={VIDEO_VESPER_FIGMA} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      );
+
+    // ROAM: nested white container with IMG_2060
+    case 'roam-media-brand':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-white overflow-hidden"
+            style={{
+              top: '-46%',
+              left: '-5.6%',
+              right: '-5.7%',
+              bottom: '-47%',
+            }}
+          >
+            <img
+              alt=""
+              src={imgImg2060}
+              className="absolute top-1/2 -translate-y-1/2 object-cover"
+              style={{
+                left: '-34.6%',
+                right: '4.2%',
+                aspectRatio: '1072/715',
+              }}
+            />
+          </div>
+        </div>
+      );
+
+    // BASQUIAT: centered Carter Benoit image on top
+    case 'basquiat-catalogue':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(calc(-50% + 0.5px), calc(-50% - 0.12px))',
+              width: '107.5%',
+              aspectRatio: '1440/961',
+            }}
+          >
+            <img
+              alt=""
+              src={imgCarterBenoit2}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            
-            <div className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2">
-               <iframe
-                 width="100%"
-                 height="100%"
-                 src={`https://www.youtube.com/embed/${youtubeID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeID}&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1`}
-                 title={project.title}
-                 frameBorder="0"
-                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                 style={{ pointerEvents: 'none' }}
-               />
-            </div>
-            
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/60 transition-colors duration-300" />
           </div>
-        ) : (
-          <img
-            src={project.src}
-            alt={project.title}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-        )}
-        
-        {!isYouTube && <div className="absolute inset-0 bg-black/20 group-hover:bg-black/60 transition-colors duration-300" />}
-      </div>
-
-      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none md:pointer-events-auto">
-        <div className="flex justify-between items-start translate-y-[-10px] group-hover:translate-y-0 transition-transform duration-300">
-           <span className="text-sm font-mono">{project.year || 'N/A'}</span>
-           <div className="flex gap-2 items-center">
-             {project.type === 'video' && (
-               <span className="text-xs uppercase tracking-widest border border-white/50 px-2 py-1 rounded-full bg-white/10">
-                 🎬 VIDEO
-               </span>
-             )}
-             <span className="text-xs uppercase tracking-widest border border-white/30 px-2 py-1 rounded-full">
-               {project.category_primary || 'Uncategorized'}
-             </span>
-           </div>
         </div>
+      );
 
-        <div className="translate-y-[10px] group-hover:translate-y-0 transition-transform duration-300 delay-75">
-          <h3 className="text-3xl md:text-4xl font-medium leading-none mb-2">
-            {project.title || 'Untitled'}
-          </h3>
-          {project.one_liner && (
-            <p 
-              className="text-sm md:text-base text-white/80 line-clamp-2 mb-4 max-w-[90%]"
-              dangerouslySetInnerHTML={{ 
-                __html: project.one_liner.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-bold">$1</strong>') 
-              }} 
+    // Black Trail Collective: video at far right (mostly clipped)
+    case 'anansi-snowboard':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute"
+            style={{
+              top: '98%',
+              left: '99%',
+              width: '252%',
+              aspectRatio: '2938/1787',
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              controlsList="nodownload"
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={VIDEO_CYMATIC_BTC} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      );
+
+    // Kona: white/light container with image 24 on top
+    case 'kona-estate-provenance':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-[#fcfcfd] overflow-hidden"
+            style={{
+              top: '0',
+              left: '0',
+              right: '0',
+              bottom: '0',
+            }}
+          >
+            <img
+              alt=""
+              src={imgImage24}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover"
             />
-          )}
-          
-          <div className="flex flex-wrap gap-2">
-            {project.tags && Array.isArray(project.tags) && project.tags.map(tag => (
-              <span key={tag} className="text-[10px] uppercase tracking-wider text-white/60">
-                #{tag}
-              </span>
-            ))}
           </div>
         </div>
-      </div>
-      
-      <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 group-hover:opacity-0 transition-opacity duration-300 hidden md:block">
-         <h3 className="text-2xl text-white font-medium drop-shadow-md">{project.title || 'Untitled'}</h3>
-      </div>
+      );
 
+    // Flavien: crumpled poster overlay
+    case 'flavien-sound':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute overflow-hidden"
+            style={{
+              top: '-6.65%',
+              left: '-7%',
+              right: '-7.1%',
+              bottom: '-6.7%',
+            }}
+          >
+            <div
+              className="absolute"
+              style={{
+                top: '-4.3%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                bottom: '-12.9%',
+                aspectRatio: '1164.15/1478.23',
+              }}
+            >
+              <img
+                alt=""
+                src={imgTwoWhiteCrumpledPostersGrungeWall22}
+                className="absolute object-cover"
+                style={{
+                  height: '133.05%',
+                  width: '225.26%',
+                  left: '-29.14%',
+                  top: '-11.94%',
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      );
+
+    // Cymatic: centered video
+    case 'cymatic-studies':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute"
+            style={{
+              top: '50%',
+              left: '50%',
+              transform: 'translate(calc(-50% - 0.25px), calc(-50% - 0.4px))',
+              width: '180%',
+              aspectRatio: '1204/733',
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              controlsList="nodownload"
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={VIDEO_CYMATIC_BTC} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      );
+
+    default:
+      return null;
+  }
+};
+
+
+// ═══════════════════════════════════════════
+//  MOBILE OVERLAY CONTENT — per-card Figma-faithful
+//  Matches Figma mobile frame 1130-4605
+// ═══════════════════════════════════════════
+
+const MobileCardOverlay: React.FC<{ slug: string }> = ({ slug }) => {
+  switch (slug) {
+    // Drexel: centered vertical video
+    case 'drexel-showcase-web':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute"
+            style={{
+              top: '50%',
+              left: '-1.8%',
+              right: '-1.9%',
+              transform: 'translateY(calc(-50% + 0.27px))',
+              aspectRatio: '1080/1350',
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              controlsList="nodownload"
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={VIDEO_DREXEL} type="video/mp4" />
+              <source src={VIDEO_DREXEL_FIGMA} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      );
+
+    // AAMP: AAMP_2024_COVER inside grey container
+    case 'aamp-rebrand':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-[#c9c9c7] overflow-hidden"
+            style={{
+              top: '-5.6%',
+              left: '-10.2%',
+              right: '-10.3%',
+              bottom: '-5.7%',
+            }}
+          >
+            <img
+              alt=""
+              src={imgAamp2024Cover}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-cover"
+              style={{
+                left: '50%',
+                right: '-22.6%',
+                width: '145%',
+                aspectRatio: '1804.31/1247.27',
+              }}
+            />
+          </div>
+        </div>
+      );
+
+    // Vesper: white container with video
+    case 'vesper-global-rebrand':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-white overflow-hidden"
+            style={{
+              top: '-6.7%',
+              left: '-11.4%',
+              right: '-11.6%',
+              bottom: '-6.9%',
+            }}
+          >
+            <div
+              className="absolute"
+              style={{
+                top: '50%',
+                left: '6%',
+                right: '6%',
+                transform: 'translateY(calc(-50% + 69.5px))',
+                aspectRatio: '432/695',
+              }}
+            >
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                controlsList="nodownload"
+                className="absolute inset-0 w-full h-full object-cover"
+              >
+                <source src={VIDEO_VESPER} type="video/mp4" />
+                <source src={VIDEO_VESPER_FIGMA} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      );
+
+    // ROAM: white container with IMG_2060
+    case 'roam-media-brand':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-white overflow-hidden"
+            style={{
+              top: '-22.9%',
+              left: '-12.5%',
+              right: '-12.6%',
+              bottom: '-32%',
+            }}
+          >
+            <img
+              alt=""
+              src={imgImg2060}
+              className="absolute top-1/2 -translate-y-1/2 object-cover"
+              style={{
+                left: '-47.4%',
+                right: '5.7%',
+                aspectRatio: '1072/715',
+              }}
+            />
+          </div>
+        </div>
+      );
+
+    // Kona: grey container with image 20
+    case 'kona-estate-provenance':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute bg-[#c9cac9] overflow-hidden"
+            style={{
+              top: '-7.2%',
+              left: '-4.8%',
+              right: '-4.7%',
+              bottom: '-7.2%',
+            }}
+          >
+            <img
+              alt=""
+              src={imgImage20}
+              className="absolute top-1/2 left-0 -translate-y-1/2 object-cover"
+              style={{
+                width: '100%',
+                aspectRatio: '984.41/1112.58',
+              }}
+            />
+          </div>
+        </div>
+      );
+
+    // Flavien: crumpled poster overlay
+    case 'flavien-sound':
+      return (
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute overflow-hidden"
+            style={{
+              top: '-11.9%',
+              left: '-17%',
+              right: '-17.2%',
+              bottom: '-12.1%',
+            }}
+          >
+            <div
+              className="absolute"
+              style={{
+                top: '50%',
+                left: '10.6%',
+                right: '10.6%',
+                transform: 'translateY(-50%)',
+                aspectRatio: '1164.15/1478.23',
+              }}
+            >
+              <img
+                alt=""
+                src={imgTwoWhiteCrumpledPostersGrungeWall22}
+                className="absolute object-cover"
+                style={{
+                  height: '133.05%',
+                  width: '225.26%',
+                  left: '-29.14%',
+                  top: '-11.94%',
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      );
+
+    // Cymatic: centered video
+    case 'cymatic-studies':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+          <div
+            className="absolute"
+            style={{
+              top: '50%',
+              left: '-58.7%',
+              right: '-58.8%',
+              transform: 'translateY(calc(-50% + 0.02px))',
+              aspectRatio: '480/292',
+            }}
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              controlsList="nodownload"
+              className="absolute inset-0 w-full h-full object-cover"
+            >
+              <source src={VIDEO_CYMATIC_BTC} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      );
+
+    default:
+      return null;
+  }
+};
+
+
+// ═══════════════════════════════════════════
+//  PROJECT CARD (Desktop)
+// ═══════════════════════════════════════════
+
+const ProjectCard = ({ item, delay = 0 }: { item: WorkGridItem; delay?: number }) => {
+  const [hovered, setHovered] = useState(false);
+
+  // Find project in CMS for category data
+  const project = PROJECTS.find(p => p.slug === item.slug);
+
+  return (
+    <Link to={`/studio/${item.slug}`} className="block">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full overflow-hidden bg-[#111827] cursor-pointer group"
+        style={{ aspectRatio: '1339/674' }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* Project cover image */}
+        <img
+          alt={item.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] max-w-full"
+          src={item.image}
+          srcSet={item.slug === 'drexel-showcase-web' ? DREXEL_COVER_SRCSET : undefined}
+          sizes={item.slug === 'drexel-showcase-web' ? '100vw' : undefined}
+        />
+
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/20 transition-opacity duration-500 group-hover:bg-black/35" />
+
+        {/* ═══ Per-card overlay content (videos, images) ═══ */}
+        <DesktopCardOverlay slug={item.slug} />
+
+        {/* Hover: category label */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 8 }}
+          transition={{ duration: 0.3 }}
+          className="absolute left-8 sm:left-16 top-8 sm:top-16 z-20"
+        >
+          {project && (
+            <p className="text-xs uppercase tracking-[2px] text-white/70">
+              {project.category_primary} — {project.year}
+            </p>
+          )}
+        </motion.div>
+
+        {/* Title — always visible at bottom-left */}
+        <div className="absolute left-8 sm:left-16 bottom-8 sm:bottom-16 z-20">
+          <p
+            className="font-medium text-xl sm:text-2xl text-white"
+            style={{ textShadow: '0px 3px 6px rgba(0,0,0,0.12)' }}
+          >
+            {item.title}
+          </p>
+        </div>
+
+        {/* Hover: one-liner description */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 8 }}
+          transition={{ duration: 0.3, delay: 0.05 }}
+          className="absolute left-8 sm:left-16 bottom-[72px] sm:bottom-[80px] max-w-[400px] z-20"
+        >
+          {project && (
+            <p className="font-light text-sm text-white/80 leading-relaxed">
+              {project.one_liner.replace(/\*\*/g, '')}
+            </p>
+          )}
+        </motion.div>
       </motion.div>
     </Link>
+  );
+};
+
+
+// ═══════════════════════════════════════════
+//  MOBILE PROJECT CARD — Figma-faithful
+//  Each card: full-width, ~393:426 aspect ratio,
+//  bg-[#111827], cover image + overlay content
+//  Matches Figma mobile frame 1130-4605
+// ═══════════════════════════════════════════
+
+/** Mobile-specific image overrides — some projects use different crops on mobile */
+const MOBILE_IMAGE_OVERRIDES: Record<string, string> = {
+  'drexel-showcase-web': imgDrexelMobile,
+  'vesper-global-rebrand': imgVesperMobile,
+};
+
+/** Mobile card — cover image + dark overlay + per-card content, matching Figma mobile frame */
+const MobileProjectCard = ({ item, delay = 0 }: { item: WorkGridItem; delay?: number }) => {
+  const mobileImage = MOBILE_IMAGE_OVERRIDES[item.slug] || item.image;
+
+  return (
+    <Link to={`/studio/${item.slug}`} className="block">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full overflow-hidden bg-[#111827]"
+        style={{ aspectRatio: '393/426' }}
+      >
+        {/* Cover image */}
+        <img
+          alt={item.title}
+          className="absolute inset-0 w-full h-full object-cover"
+          src={mobileImage}
+          srcSet={item.slug === 'drexel-showcase-web' ? DREXEL_COVER_SRCSET : undefined}
+          sizes={item.slug === 'drexel-showcase-web' ? '100vw' : undefined}
+        />
+
+        {/* Dark overlay — Figma: bg-[rgba(0,0,0,0.2)] */}
+        <div className="absolute inset-0 bg-black/20" />
+
+        {/* ═══ Per-card overlay content (videos, images) ═══ */}
+        <MobileCardOverlay slug={item.slug} />
+
+        {/* Title — bottom-left, Figma: left-[48px] bottom-[48px] shadow text */}
+        <p
+          className="absolute left-[24px] bottom-[24px] z-20 font-medium text-lg text-white"
+          style={{ textShadow: '0px 3px 6px rgba(0,0,0,0.12)' }}
+        >
+          {item.title}
+        </p>
+      </motion.div>
+    </Link>
+  );
+};
+
+
+// ═══════════════════════════════════════════
+//  WORK GRID — Figma-matched staggered layout
+//  Mobile: full-width stacked cards (MobileProjectCard)
+//  Desktop: staggered widths (ProjectCard)
+// ═══════════════════════════════════════════
+
+const WORK_GRID_FLAT = WORK_GRID.flat();
+
+const WorkGrid = () => (
+  <>
+    {/* -- MOBILE: full-width stacked -- */}
+    <div className="flex flex-col md:hidden">
+      {WORK_GRID_FLAT.map((item, idx) => (
+        <MobileProjectCard key={item.slug} item={item} delay={idx * 0.05} />
+      ))}
+    </div>
+
+    {/* -- DESKTOP: staggered layout -- */}
+    <div className="hidden md:flex md:flex-col">
+      {WORK_GRID.map((row, rowIdx) => {
+        if (row.length === 2) {
+          return (
+            <div key={rowIdx} className="flex flex-row">
+              {row.map((item, i) => (
+                <div key={item.slug} className="w-1/2">
+                  <ProjectCard item={item} delay={i * 0.1} />
+                </div>
+              ))}
+            </div>
+          );
+        }
+
+        const item = row[0];
+        const layoutClasses: Record<string, string> = {
+          full: 'w-full',
+          'wide-left': 'w-[90%]',
+          'wide-right': 'w-[91%] ml-auto',
+        };
+
+        return (
+          <div key={rowIdx} className={layoutClasses[item.layout] || 'w-full'}>
+            <ProjectCard item={item} />
+          </div>
+        );
+      })}
+    </div>
+  </>
+);
+
+
+// ═══════════════════════════════════════════
+//  STUDIO PAGE (WORK GRID) — EXPORT
+// ═══════════════════════════════════════════
+
+export const StudioPage = () => {
+  const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const seo = pathname === '/work' ? PAGE_SEO.work : PAGE_SEO.studio;
+
+  useSEO({
+    title: seo.title,
+    description: seo.description,
+    path: seo.path,
+    image: seo.image,
+  });
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
+      {/* Radial gradient background */}
+      <div
+        className="fixed inset-0 pointer-events-none z-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, #1F2937 0%, #151C28 50%, #0B0F19 100%)',
+        }}
+      />
+
+      <div className="relative z-10">
+        <StickyNavigation variant="dark" showLogo={true} />
+
+        {/* Hero — Work heading + subtitle */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="px-5 sm:px-12 md:px-24 pt-24 sm:pt-24 pb-8 sm:pb-16"
+        >
+          <div className="pt-16 sm:pt-16">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="font-normal text-[48px] sm:text-[96px] md:text-[128px] leading-[1] tracking-[-1.2px] sm:tracking-[-3.2px] text-white"
+            >
+              {t('studio.title')}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+              className="font-normal text-base sm:text-2xl leading-7 sm:leading-8 text-[#d1d5db] max-w-[575px] mt-6 sm:mt-10"
+            >
+              {t('studio.subtitle')}
+            </motion.p>
+          </div>
+        </motion.section>
+
+        {/* Project Grid */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+        >
+          <WorkGrid />
+        </motion.div>
+      </div>
+    </div>
   );
 };

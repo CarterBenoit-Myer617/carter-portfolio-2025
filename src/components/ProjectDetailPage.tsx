@@ -4,20 +4,15 @@ import { motion } from 'motion/react';
 import { ArrowLeft, Play, ArrowRight } from 'lucide-react';
 import { StickyNavigation } from './StickyNavigation';
 import { PROJECTS, sortProjects, Project, CaseBlock } from '../data/cms';
-
-const renderBoldText = (text: string) => {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith('**') && part.endsWith('**')) {
-      return (
-        <strong key={i} className="font-bold text-white">
-          {part.slice(2, -2)}
-        </strong>
-      );
-    }
-    return part;
-  });
-};
+import { useSEO } from './useSEO';
+import { CASE_STUDY_SEO, DEFAULT_OG_IMAGE } from '../data/seo';
+import { FlavienSoundGallery } from './FlavienSoundGallery';
+import { CymaticGallery } from './CymaticGallery';
+import { DrexelGallery } from './DrexelGallery';
+import { AampGallery } from './AampGallery';
+import { VesperGallery } from './VesperGallery';
+import { RoamGallery } from './RoamGallery';
+import { BasquiatGallery } from './BasquiatGallery';
 
 // Helper to handle local project mapping and defaults
 const applyProjectOverrides = (items: Project[]): Project[] => {
@@ -36,9 +31,9 @@ const SafeVideo = ({ src, className, autoPlay = true, muted = true, loop = true 
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !autoPlay) return;
-
+    
     video.muted = muted;
-
+    
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise.catch(err => {
@@ -58,35 +53,37 @@ const SafeVideo = ({ src, className, autoPlay = true, muted = true, loop = true 
       playsInline
       className={className}
       autoPlay={autoPlay}
+      preload="auto"
+      controlsList="nodownload"
     >
-      <source src={src} />
+      <source src={src} type="video/mp4" />
     </video>
   );
 };
 
 // Media Renderer
-const MediaRenderer = ({
-    type,
-    src,
-    alt,
-    className,
-    overlayContent
-}: {
-    type?: string,
-    src: string,
-    alt?: string,
-    className?: string,
-    overlayContent?: React.ReactNode
+const MediaRenderer = ({ 
+    type, 
+    src, 
+    alt, 
+    className, 
+    overlayContent 
+}: { 
+    type?: string, 
+    src: string, 
+    alt?: string, 
+    className?: string, 
+    overlayContent?: React.ReactNode 
 }) => {
   const isYouTube = src && (src.includes('youtu.be') || src.includes('youtube.com'));
-
+  
   const renderContent = () => {
       if (type === 'video' || isYouTube) {
         if (isYouTube) {
             const videoId = src.includes('youtu.be') ? src.split('youtu.be/')[1] : src.split('v=')[1];
             return (
               <div className={`relative ${className} overflow-hidden`}>
-                <iframe
+                <iframe 
                   src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1&enablejsapi=1`}
                   className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2 pointer-events-none object-cover"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -104,14 +101,14 @@ const MediaRenderer = ({
   return (
       <div className="relative w-full h-full group overflow-hidden">
           {renderContent()}
-
+          
           {overlayContent && (
-              <motion.div
+              <motion.div 
                   className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent flex flex-col justify-end p-8 md:p-12 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
               >
-                  <motion.div
+                  <motion.div 
                     initial={{ y: 20 }}
                     whileHover={{ y: 0 }}
                     transition={{ duration: 0.4, delay: 0.1 }}
@@ -128,53 +125,55 @@ const MediaRenderer = ({
 
 const AndersHeader = ({ title, intro, details }: { title: string, intro: { italic: string, normal: string }, details: string[] }) => {
     return (
-        <section className="w-full max-w-[1920px] mx-auto pt-[120px] md:pt-[140px] pb-[60px] md:pb-[100px] px-4 md:px-12 lg:px-[60px]">
-            <div className="flex flex-col gap-[30px] w-full px-2 md:px-16">
+        <section className="w-full max-w-[1920px] mx-auto pt-[140px] pb-[100px] px-6 md:px-12 lg:px-[60px]">
+            <div className="flex flex-col gap-[30px] w-full px-4 md:px-16">
                 <div className="flex flex-col gap-5 w-full">
-                     <Link to="/studio" className="text-white text-xl md:text-2xl underline decoration-1 underline-offset-4 hover:opacity-70 transition-opacity w-max min-h-[44px] inline-flex items-center">
+                     <Link to="/studio" className="text-white text-xl md:text-2xl underline decoration-1 underline-offset-4 hover:opacity-70 transition-opacity w-max min-h-11 min-w-11 inline-flex items-center">
                          Case Study
                      </Link>
-                     <h1 className="text-white text-[clamp(2.5rem,10vw,6.25rem)] leading-[0.9] tracking-[-0.04em] font-normal break-words">
+                     <h1 className="text-white text-[64px] md:text-[100px] leading-[0.9] tracking-[-0.04em] font-normal">
                          {title}
                      </h1>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-8 lg:gap-32 w-full mt-4 md:mt-8">
-                     <div className="flex-1 w-full">
-                         <p className="text-[18px] md:text-[28px] leading-[1.3] text-white">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-32 w-full mt-8">
+                     <div className="flex-1">
+                         <p className="text-[20px] md:text-[28px] leading-[1.3] text-white">
                              <span className="italic font-serif text-white/90 mr-2 font-light">{intro.italic}</span>
                              <span className="font-light">{intro.normal}</span>
                          </p>
                      </div>
-                     <div className="w-full lg:w-[300px] shrink-0 text-[#767676] text-base md:text-lg leading-relaxed flex flex-col gap-1">
+                     <div className="w-full lg:w-[300px] shrink-0 text-[#767676] text-lg leading-relaxed flex flex-col gap-1">
                          {details.map((detail, i) => (
                              <p key={i}>{detail}</p>
                          ))}
                      </div>
                 </div>
             </div>
-
+            
             <div className="w-full h-[1px] bg-white/20 mt-[100px]" />
         </section>
     );
 };
 
-const AndersGalleryItem = ({
-    type,
-    src,
-    className,
-    title,
-    category,
-    description
-}: {
-    type?: string,
-    src: string,
-    className?: string,
-    title?: string,
-    category?: string,
-    description?: string
+const AndersGalleryItem = ({ 
+    type, 
+    src, 
+    className, 
+    title, 
+    category, 
+    description,
+    bgColor 
+}: { 
+    type?: string, 
+    src: string, 
+    className?: string, 
+    title?: string, 
+    category?: string, 
+    description?: string,
+    bgColor?: string 
 }) => {
-
+    
     const overlayContent = (title || description || category) ? (
         <div className="flex flex-col gap-3 text-white">
             {category && (
@@ -185,18 +184,20 @@ const AndersGalleryItem = ({
             {title && <h2 className="text-4xl md:text-5xl font-normal leading-tight">{title}</h2>}
             {description && (
                 <p className="text-base md:text-lg text-gray-300 leading-relaxed max-w-2xl mt-2">
-                    {renderBoldText(description)}
+                    {description}
                 </p>
             )}
         </div>
     ) : null;
 
+    const bg = bgColor || '#121212';
+
     return (
-        <div className={`relative ${className} bg-[#121212]`}>
-            <MediaRenderer
-                type={type}
-                src={src}
-                className="w-full h-full object-cover object-[center_35%]"
+        <div className={`relative ${className} overflow-hidden`} style={{ backgroundColor: bg }}>
+            <MediaRenderer 
+                type={type} 
+                src={src} 
+                className="w-full h-full object-cover object-[center_35%]" 
                 overlayContent={overlayContent}
             />
         </div>
@@ -206,8 +207,8 @@ const AndersGalleryItem = ({
 // --- Universal Project Content Logic ---
 
 const getProjectContent = (project: Project) => {
-    // 1. HARDCODED KONA DATA (Preserved for specific visual quality)
-    if (project.slug === 'kona-estate-provenance' || project.slug === 'kona-coffee') {
+    // Kona now uses cms.ts blocks like all other projects
+    if (false) {
         const IMG_VINEYARD = "https://images.unsplash.com/photo-1691967256440-0726d2d57a2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
         const IMG_WHISKY = "https://images.unsplash.com/photo-1616666738141-d009dab6419b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
         const IMG_VOLCANO = "https://images.unsplash.com/photo-1679582540400-2024843de217?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
@@ -248,61 +249,87 @@ const getProjectContent = (project: Project) => {
 
     const oneLiner = project.one_liner || "";
     const oneLinerPlain = oneLiner.replace(/\*\*/g, "");
-
+    
     const items: any[] = [];
     const blocks = (project.blocks || []).sort((a, b) => a.order - b.order);
+    const hasLayoutHints = blocks.some(b => b.layoutHint);
+    
+    if (hasLayoutHints) {
+        // Layout-hint-aware rendering
+        let i = 0;
+        while (i < blocks.length) {
+            const block = blocks[i];
+            if (!block.mediaSrc) {
+                items.push({ type: 'text', title: block.headline, desc: block.body });
+                i++;
+                continue;
+            }
+            const isVideo = block.type === 'video' || block.mediaSrc.includes('.mp4') || block.mediaSrc.includes('youtu');
+            const hint = block.layoutHint || 'full';
 
-    // Triplet grouping: every 3 blocks → [full-width, split-left, split-right]
-    // This replicates the Kona gallery pattern for ALL projects
-    for (let i = 0; i < blocks.length; i += 3) {
-        const b1 = blocks[i];
-        const b2 = blocks[i + 1];
-        const b3 = blocks[i + 2];
-
-        const makeItem = (block: CaseBlock) => {
-            const isVideo = block.type === 'video' || (block.mediaSrc || '').includes('.mp4') || (block.mediaSrc || '').includes('youtu');
-            return {
-                type: isVideo ? 'video' : 'image',
-                src: block.mediaSrc || '',
-                title: block.headline,
-                category: project.category_primary,
-                desc: block.body,
-                layout: 'full'
-            };
-        };
-
-        // First block in triplet → full-width
-        if (b1) {
-            if (b1.mediaSrc) {
-                items.push(makeItem(b1));
+            if (hint === 'full' || isVideo) {
+                items.push({
+                    type: isVideo ? 'video' : 'image',
+                    src: block.mediaSrc,
+                    title: block.headline,
+                    category: project.category_primary,
+                    desc: block.body,
+                    layout: 'full',
+                    bgColor: block.bgColor,
+                });
+                i++;
+            } else if ((hint === 'narrow' || hint === 'wide') && i + 1 < blocks.length) {
+                const next = blocks[i + 1];
+                if (next.mediaSrc && (next.layoutHint === 'narrow' || next.layoutHint === 'wide')) {
+                    const leftHint = hint;
+                    const rightHint = next.layoutHint || 'wide';
+                    items.push({
+                        type: 'split',
+                        splitMode: leftHint === 'narrow' ? '30/70' : '60/40',
+                        items: [
+                            { type: 'image', src: block.mediaSrc, title: block.headline, category: project.category_primary, desc: block.body, bgColor: block.bgColor },
+                            { type: 'image', src: next.mediaSrc, title: next.headline, category: project.category_primary, desc: next.body, bgColor: next.bgColor },
+                        ]
+                    });
+                    i += 2;
+                } else {
+                    items.push({ type: 'image', src: block.mediaSrc, title: block.headline, category: project.category_primary, desc: block.body, layout: 'full', bgColor: block.bgColor });
+                    i++;
+                }
             } else {
-                items.push({ type: 'text', title: b1.headline, desc: b1.body });
+                items.push({ type: 'image', src: block.mediaSrc, title: block.headline, category: project.category_primary, desc: block.body, layout: 'full', bgColor: block.bgColor });
+                i++;
             }
         }
-
-        // Second + third blocks → split pair
-        if (b2 && b3 && b2.mediaSrc && b3.mediaSrc) {
-            items.push({
-                type: 'split',
-                items: [makeItem(b2), makeItem(b3)]
-            });
-        } else {
-            // Fallback: render individually as full-width
-            if (b2) {
-                if (b2.mediaSrc) {
-                    items.push(makeItem(b2));
+    } else {
+        // Legacy auto-pairing logic for projects without layout hints
+        let splitBuffer: any[] = [];
+        blocks.forEach((block) => {
+            if (block.mediaSrc) {
+                const isVideo = block.type === 'video' || block.mediaSrc.includes('.mp4') || block.mediaSrc.includes('youtu');
+                const item = {
+                    type: isVideo ? 'video' : 'image',
+                    src: block.mediaSrc,
+                    title: block.headline,
+                    category: project.category_primary,
+                    desc: block.body,
+                    layout: 'full'
+                };
+                if (!isVideo && splitBuffer.length === 0) {
+                    splitBuffer.push(item);
+                } else if (!isVideo && splitBuffer.length === 1) {
+                    items.push({ type: 'split', items: [splitBuffer[0], item] });
+                    splitBuffer = [];
                 } else {
-                    items.push({ type: 'text', title: b2.headline, desc: b2.body });
+                    if (splitBuffer.length > 0) { items.push(splitBuffer[0]); splitBuffer = []; }
+                    items.push(item);
                 }
+            } else {
+                if (splitBuffer.length > 0) { items.push(splitBuffer[0]); splitBuffer = []; }
+                items.push({ type: 'text', title: block.headline, desc: block.body });
             }
-            if (b3) {
-                if (b3.mediaSrc) {
-                    items.push(makeItem(b3));
-                } else {
-                    items.push({ type: 'text', title: b3.headline, desc: b3.body });
-                }
-            }
-        }
+        });
+        if (splitBuffer.length > 0) { items.push(splitBuffer[0]); }
     }
 
     const italicPart = project.role ? project.role : project.category_primary;
@@ -325,18 +352,40 @@ const getProjectContent = (project: Project) => {
 const ProjectDetailContent = ({ project }: { project: Project }) => {
     const content = useMemo(() => getProjectContent(project), [project]);
     const { items, title, intro, details } = content;
+    const isFlavien = project.slug === 'flavien-sound';
+    const isCymatic = project.slug === 'cymatic-studies';
+    const isDrexel = project.slug === 'drexel-showcase-web';
+    const isAamp = project.slug === 'aamp-rebrand';
+    const isVesper = project.slug === 'vesper-global-rebrand';
+    const isRoam = project.slug === 'roam-media-brand';
+    const isBasquiat = project.slug === 'basquiat-catalogue';
 
     return (
-        <div className="min-h-screen bg-[#0A0A0A] text-white font-sans selection:bg-purple-500/30 overflow-x-hidden">
+        <div className="min-h-screen bg-[#0A0A0A] text-white font-sans selection:bg-purple-500/30">
             <StickyNavigation variant="dark" showLogo={true} />
 
             <main className="w-full">
-                <AndersHeader
+                <AndersHeader 
                     title={title}
                     intro={intro}
                     details={details}
                 />
 
+                {isFlavien ? (
+                    <FlavienSoundGallery />
+                ) : isCymatic ? (
+                    <CymaticGallery />
+                ) : isDrexel ? (
+                    <DrexelGallery />
+                ) : isAamp ? (
+                    <AampGallery />
+                ) : isVesper ? (
+                    <VesperGallery />
+                ) : isRoam ? (
+                    <RoamGallery />
+                ) : isBasquiat ? (
+                    <BasquiatGallery />
+                ) : (
                 <section className="w-full pb-[80px]">
                      <div className="flex flex-col gap-0 w-full">
                          {items.map((item: any, index: number) => {
@@ -344,80 +393,93 @@ const ProjectDetailContent = ({ project }: { project: Project }) => {
                                  return (
                                      <div key={index} className="w-full max-w-[1920px] mx-auto px-6 md:px-[60px] py-20 flex justify-start">
                                          <div className="w-full md:w-2/3 max-w-4xl text-left pl-4 md:pl-16">
-                                              {item.title && <h3 className="text-2xl text-white mb-6 font-normal">{item.title}</h3>}
-                                              <p className="text-[#A1A1AA] text-lg md:text-xl lg:text-2xl leading-[1.6] whitespace-pre-line font-light">{renderBoldText(item.desc || '')}</p>
+                                              {item.title && <h2 className="text-2xl text-white mb-6 font-normal">{item.title}</h2>}
+                                              <p className="text-[#A1A1AA] text-xl md:text-2xl leading-[1.6] whitespace-pre-line font-light">{item.desc}</p>
                                          </div>
                                      </div>
                                  );
-                             } else if (item.layout === 'full' || (item.type === 'video' || item.type === 'image')) {
-                                 const isVideo = item.type === 'video';
-                                 const desktopClass = isVideo ? 'md:h-[90vh] md:aspect-auto' : 'md:h-[110vh] md:aspect-auto';
-
-                                 return (
-                                     <AndersGalleryItem
-                                         key={index}
-                                         type={item.type}
-                                         src={item.src}
-                                         title={item.title}
-                                         category={item.category}
-                                         description={item.desc}
-                                         className={`w-full aspect-[4/5] max-w-full ${desktopClass}`}
-                                     />
-                                 );
                              } else if (item.type === 'split' && item.items) {
-                                 let rowHeight = "md:h-[110vh]";
+                                 // Use splitMode from layout hints, or fallback to alternating pattern
+                                 let rowHeight = "md:h-[110vh]"; 
                                  let leftWidth = "md:w-1/2";
                                  let rightWidth = "md:w-1/2";
-
-                                 if (index % 4 === 1) {
+                                 
+                                 if (item.splitMode === '30/70') {
                                      leftWidth = "md:w-[30%]";
                                      rightWidth = "md:w-[70%]";
-                                 } else if (index % 4 === 3) {
+                                 } else if (item.splitMode === '60/40') {
                                      leftWidth = "md:w-[60%]";
                                      rightWidth = "md:w-[40%]";
+                                 } else {
+                                     // Legacy alternating pattern
+                                     if (index % 4 === 1) {
+                                         leftWidth = "md:w-[30%]";
+                                         rightWidth = "md:w-[70%]";
+                                     } else if (index % 4 === 3) {
+                                         leftWidth = "md:w-[60%]";
+                                         rightWidth = "md:w-[40%]";
+                                     }
                                  }
-
+        
                                  return (
                                      <div key={index} className={`flex flex-col md:flex-row gap-0 w-full ${rowHeight}`}>
                                          {item.items.map((subItem: any, subIndex: number) => (
-                                             <AndersGalleryItem
+                                             <AndersGalleryItem 
                                                  key={`${index}-${subIndex}`}
                                                  type={subItem.type}
                                                  src={subItem.src}
                                                  title={subItem.title}
                                                  category={subItem.category}
                                                  description={subItem.desc}
+                                                 bgColor={subItem.bgColor}
                                                  className={`w-full aspect-square md:aspect-auto ${subIndex === 0 ? leftWidth : rightWidth}`}
                                              />
                                          ))}
                                      </div>
+                                 );
+                             } else if (item.layout === 'full' || item.type === 'video' || item.type === 'image') {
+                                 const isVideo = item.type === 'video';
+                                 const desktopClass = isVideo ? 'md:h-[90vh] md:aspect-auto' : 'md:h-[110vh] md:aspect-auto';
+                                                   
+                                 return (
+                                     <AndersGalleryItem 
+                                         key={index}
+                                         type={item.type}
+                                         src={item.src}
+                                         title={item.title}
+                                         category={item.category}
+                                         description={item.desc}
+                                         bgColor={item.bgColor}
+                                         className={`w-full aspect-[4/5] ${desktopClass}`}
+                                     />
                                  );
                              }
                              return null;
                          })}
                      </div>
                 </section>
+                )}
 
-                <section className="w-full max-w-[1920px] mx-auto px-4 md:px-[15px] py-12 md:py-20">
-                    <div className="w-full flex flex-col md:flex-row md:justify-between md:items-start gap-8 md:gap-0 md:px-12">
+                <section className="w-full max-w-[1920px] mx-auto px-6 md:px-[15px] py-20">
+                    <div className="w-full flex justify-between items-start md:px-12">
                         {(() => {
                             const sorted = sortProjects(PROJECTS);
                             const currentIdx = sorted.findIndex(p => p.id === project.id);
                             const prev = currentIdx > 0 ? sorted[currentIdx - 1] : sorted[sorted.length - 1];
                             const next = currentIdx < sorted.length - 1 ? sorted[currentIdx + 1] : sorted[0];
-
+        
                             return (
                                 <>
-                                    <Link to={`/studio/${prev.slug}`} className="group flex flex-col gap-2 md:gap-4 items-start min-h-[44px] py-2">
+                                    <Link to={`/studio/${prev.slug}`} className="group flex flex-col gap-2 md:gap-4 items-start">
                                         <span className="font-['Arial',sans-serif] text-[#99a1af] text-[10px] md:text-xs tracking-[1.2px] uppercase">Previous Project</span>
-                                        <span className="font-['Arial',sans-serif] text-2xl md:text-6xl text-white group-hover:opacity-70 transition-opacity break-words">
+                                        <span className="font-['Arial',sans-serif] text-3xl md:text-6xl text-white group-hover:opacity-70 transition-opacity">
                                             {prev.title}
                                         </span>
                                     </Link>
-
-                                    <Link to={`/studio/${next.slug}`} className="group flex flex-col gap-2 md:gap-4 items-start md:items-end min-h-[44px] py-2">
-                                        <span className="font-['Arial',sans-serif] text-[#99a1af] text-[10px] md:text-xs tracking-[1.2px] uppercase md:text-right">Next Project</span>
-                                        <span className="font-['Arial',sans-serif] text-2xl md:text-6xl text-white md:text-right group-hover:opacity-70 transition-opacity break-words">
+        
+                                    <Link to={`/studio/${next.slug}`} className="group flex flex-col gap-2 md:gap-4 items-end">
+                                        <span className="font-['Arial',sans-serif] text-[#99a1af] text-[10px] md:text-xs tracking-[1.2px] uppercase text-right">Next Project</span>
+                                        <span className="font-['Arial',sans-serif] text-3xl md:text-6xl text-white text-right group-hover:opacity-70 transition-opacity">
                                             {next.title}
                                         </span>
                                     </Link>
@@ -425,9 +487,9 @@ const ProjectDetailContent = ({ project }: { project: Project }) => {
                             );
                         })()}
                     </div>
-
-                    <div className="w-full flex justify-center mt-12 md:mt-16">
-                        <Link to="/studio" className="border border-[#333] px-8 md:px-16 py-4 md:py-6 min-h-[44px] hover:bg-white hover:text-black transition-all duration-300 group inline-flex items-center justify-center">
+        
+                    <div className="w-full flex justify-center mt-16">
+                        <Link to="/studio" className="border border-[#333] px-12 md:px-16 py-6 hover:bg-white hover:text-black transition-all duration-300 group">
                             <span className="font-['Arial',sans-serif] text-white text-sm tracking-[2px] uppercase group-hover:text-black">
                                 View Full Index
                             </span>
@@ -441,7 +503,7 @@ const ProjectDetailContent = ({ project }: { project: Project }) => {
 
 export function ProjectDetailPage() {
   const { slug } = useParams();
-
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
@@ -450,6 +512,14 @@ export function ProjectDetailPage() {
     const p = PROJECTS.find(p => p.slug === slug);
     return p ? applyProjectOverrides([p])[0] : null;
   }, [slug]);
+
+  const seo = slug ? CASE_STUDY_SEO[slug] : undefined;
+  useSEO({
+    title: seo?.title || project?.title || 'Project',
+    description: seo?.description || project?.one_liner?.replace(/\*\*/g, '') || 'A project by Carter Benoît-Myer.',
+    path: seo?.path || `/studio/${slug}`,
+    image: seo?.image || DEFAULT_OG_IMAGE,
+  });
 
   if (!project) {
     return (
@@ -463,4 +533,4 @@ export function ProjectDetailPage() {
   }
 
   return <ProjectDetailContent project={project} />;
-}
+};
