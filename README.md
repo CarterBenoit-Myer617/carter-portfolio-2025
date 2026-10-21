@@ -35,15 +35,14 @@ carter-portfolio-2025/
 ├── src/
 │   ├── App.tsx                   # Root + routes
 │   ├── main.tsx                  # Entry point
-│   ├── assets/                   # Figma-exported PNGs
 │   ├── components/               # Page and UI components
-│   └── data/cms.ts               # Project CMS (10 projects)
-├── public/
-│   └── projects/                 # Per-project assets
-├── data/
-│   └── briefs/                   # Project briefs (markdown)
-├── docs/                         # Architecture docs
-└── index.html
+│   ├── data/cms.ts               # Project CMS
+│   ├── services/
+│   ├── styles/
+│   └── guidelines/
+├── index.html
+├── package.json
+└── vite.config.ts
 ```
 
 ## Routes
@@ -57,6 +56,7 @@ carter-portfolio-2025/
 | `/studio/:slug` | Project Detail |
 | `/studio-shop` | Studio Shop |
 | `/contact` | Contact |
+| `/video-uploader` | Video uploader |
 
 ## Content Management
 
