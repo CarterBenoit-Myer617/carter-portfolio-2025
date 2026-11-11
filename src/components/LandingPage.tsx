@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { StickyNavigation } from './StickyNavigation';
 import { PROJECTS, sortProjects } from '../data/cms';
 import { PageHero } from './PageHero';
@@ -10,20 +10,20 @@ import { useSEO } from './useSEO';
 
 // Cover images now sourced from cms.ts (single source of truth)
 
-// ═══ Desktop inner/overlay images ═══
-import imgAampScreenshot from "figma:asset/2e5a9e5589f617814a005bd70feb129382ca73eb.png";
-import imgRoamPhoto from "figma:asset/13935800951653a5cae2bda85373e6073b24647d.png";
-import imgFlavienPoster from "figma:asset/1a7c10aa8de24cbacf72344ed0b2ed5d33be952c.png";
-import imgBasquiatInner from "figma:asset/0fcac5110e733ab89fbc05dbbe220f841f3a63f3.png";
-import imgKonaInner from "figma:asset/e3e797514fbf211940697131f6fd7b221f2d3e81.png";
-import imgCymaticFrame from "figma:asset/e0d14c19364de823fbf45e4e03a204c54e59e957.png";
-import imgCymaticInnerPhoto from "figma:asset/f981bd1fb16a92b0c4361ebfcb165153fc1fb9f1.png";
+// ═══ Desktop inner/overlay images — public paths (stable on Figma Sites deploy) ═══
+const imgAampScreenshot = '/projects/aamp-rebrand/mockups/aamp-2024-portfolio-spread.webp';
+const imgRoamPhoto = '/projects/roam-media-brand/spreads/roam-2024-spread-02.webp';
+const imgFlavienPoster = '/projects/flavien-sound/hero/flavien-posters-2024-hero.webp';
+const imgBasquiatInner = '/projects/basquiat-catalogue/cover/basquiat-cover.webp';
+const imgKonaInner = '/projects/kona-estate-provenance/hero/KONA_2023_HERO.webp';
+const imgCymaticFrame = '/projects/cymatic-studies/slides/cymatic-slide-01.webp';
+const imgCymaticInnerPhoto = '/projects/cymatic-studies/images/cymatic-image-01.webp';
 
 // ═══ Mobile-specific inner images ═══
 const imgAamp2024Cover = '/projects/aamp-rebrand/mockups/aamp-2024-cover.webp';
-import imgSafeVideo from "figma:asset/01cf8910843310aba94c1ac3673a449c0c5acf16.png";
-import imgImage20 from "figma:asset/bd7998211af3de495b5362334be78e85d9fbda76.png";
-import imgKonaPackaging from "figma:asset/2003015e183208c593196efd6d4d16ac76601375.png";
+const imgSafeVideo = '/projects/roam-media-brand/images/roam-application-video-preview.webp';
+const imgImage20 = '/projects/kona-estate-provenance/mockups/KONA_2023_PANEL_01.webp';
+const imgKonaPackaging = '/projects/kona-estate-provenance/mockups/KONA_2023_PANEL_02.webp';
 
 const VESPER_VIDEO_FALLBACK = 'https://images.unsplash.com/photo-1633638627750-9408a33d3d58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb3dpbmclMjBjcmV3JTIwYm9hdCUyMHdhdGVyJTIwYXV0dW1ufGVufDF8fHx8MTc3Mzg1Nzk2Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral';
 
@@ -208,52 +208,21 @@ const MobileInnerOverlay = ({ slug }: { slug: string }) => {
         </div>
       );
     case 'roam-media-brand':
-      // ROAM mobile: white bg with imgRoamPhoto (IMG_2060) — Figma: aspect-[1072/715], left=-232 right=28
       return (
         <div className="absolute inset-0 bg-black/20 overflow-hidden">
-          <div
-            className="absolute bg-white overflow-hidden"
-            style={{ inset: '-98px -50px -136px -49px' }}
-          >
-            <div
-              className="absolute -translate-y-1/2"
-              style={{ aspectRatio: '1072 / 715', left: '-232px', right: '28px', top: 'calc(50% - 0.5px)' }}
-            >
-              <img
-                src={imgRoamPhoto}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-              />
-            </div>
+          <div className="absolute inset-0 bg-white overflow-hidden flex items-center justify-center p-4">
+            <img
+              src={imgRoamPhoto}
+              alt=""
+              className="w-full h-full max-w-full object-cover pointer-events-none"
+            />
           </div>
         </div>
       );
     case 'basquiat-catalogue':
-      // BASQUIAT mobile: offset base (527×570 at left=-67 top=-101) + CarterBenoit2 overlay cropped
       return (
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Offset base catalogue image — Figma: 527×570 at left=-67, top=-100.61 */}
-          <div className="absolute" style={{ left: '-67px', top: '-101px', width: '527px', height: '570px' }}>
-            <img src={imgBasquiatInner} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
-          </div>
-          {/* Overlay with CarterBenoit2 cropped — Figma: inset-[-79px_-419px_-148px_-140px], img at 202.96% width */}
-          <div className="absolute inset-0 bg-black/20 overflow-hidden">
-            <div className="absolute overflow-hidden" style={{ inset: '-79px -419px -148px -140px' }}>
-              <div
-                className="absolute"
-                style={{ aspectRatio: '513 / 695', left: '90px', top: '-83px', bottom: '41px' }}
-              >
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  <img
-                    src={imgBasquiatInner}
-                    alt=""
-                    className="absolute max-w-none h-full"
-                    style={{ left: '-0.02%', top: 0, width: '202.96%' }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="absolute inset-0 overflow-hidden bg-black/20">
+          <img src={imgBasquiatInner} alt="" className="w-full h-full max-w-full object-cover pointer-events-none" />
         </div>
       );
     case 'kona-estate-provenance':
@@ -362,7 +331,7 @@ const TabletProjectCard = ({ card, index }: { card: CardDef; index: number }) =>
       />
       <TabletInnerOverlay slug={card.slug} />
       <div className="absolute inset-0 bg-black/20" />
-      {/* Title — Figma tablet: left=48, top=770.56 (~90% down) */}
+      {/* Title — Figma sm: left=48, top=770.56 (~90% down) */}
       <div
         className="absolute z-10"
         style={{ left: '48px', bottom: '48px', textShadow: '0px 3px 6px rgba(0,0,0,0.12)' }}
@@ -379,7 +348,7 @@ const TabletProjectCard = ({ card, index }: { card: CardDef; index: number }) =>
 const TabletInnerOverlay = ({ slug }: { slug: string }) => {
   switch (slug) {
     case 'aamp-rebrand':
-      // AAMP tablet: oversized screenshot shifted up
+      // AAMP sm: oversized screenshot shifted up
       return (
         <div className="absolute inset-0 bg-black/20 overflow-hidden">
           <div className="absolute inset-[-2%_0_2%_0] overflow-hidden">
@@ -388,7 +357,7 @@ const TabletInnerOverlay = ({ slug }: { slug: string }) => {
         </div>
       );
     case 'vesper-global-rebrand':
-      // Vesper tablet: white bg with centered rowing image (video fallback)
+      // Vesper sm: white bg with centered rowing image (video fallback)
       return (
         <div className="absolute inset-0 bg-black/20 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
@@ -403,7 +372,7 @@ const TabletInnerOverlay = ({ slug }: { slug: string }) => {
         </div>
       );
     case 'basquiat-catalogue':
-      // BASQUIAT tablet: oversized catalogue centered
+      // BASQUIAT sm: oversized catalogue centered
       return (
         <div className="absolute inset-0 bg-black/20 flex items-center justify-center overflow-hidden">
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style={{ width: '228%', aspectRatio: '1790 / 900' }}>
@@ -412,7 +381,7 @@ const TabletInnerOverlay = ({ slug }: { slug: string }) => {
         </div>
       );
     case 'kona-estate-provenance':
-      // Kona tablet: #121212 container with packaging bg + imgImage20 centered
+      // Kona sm: #121212 container with packaging bg + imgImage20 centered
       return (
         <div className="absolute inset-0 bg-black/20 overflow-hidden">
           <div className="absolute overflow-hidden bg-[#121212]" style={{ inset: '-12% -10% -12% -10%' }}>
@@ -426,7 +395,7 @@ const TabletInnerOverlay = ({ slug }: { slug: string }) => {
         </div>
       );
     case 'flavien-sound':
-      // Flavien tablet: oversized poster centered
+      // Flavien sm: oversized poster centered
       return (
         <div className="absolute inset-0 bg-black/20 overflow-hidden">
           <div className="absolute flex items-center justify-center" style={{ inset: '-5% -10% -5% -8%' }}>
@@ -435,7 +404,7 @@ const TabletInnerOverlay = ({ slug }: { slug: string }) => {
         </div>
       );
     case 'cymatic-studies':
-      // Cymatic tablet: oversized frame with rotated photo
+      // Cymatic sm: oversized frame with rotated photo
       return (
         <div className="absolute inset-0 bg-black/20 overflow-hidden">
           <div className="absolute overflow-hidden" style={{ inset: '-7% -12% -3% -12%' }}>
@@ -711,21 +680,21 @@ export const LandingPage = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           {/* Mobile: < 394px — inner compositions */}
-          <div className="block tablet:hidden">
+          <div className="block sm:hidden">
             <MobileWorkGrid />
           </div>
           {/* Tablet: 394–800px — simple cover cards */}
-          <div className="hidden tablet:block laptop:hidden">
+          <div className="hidden sm:block md:hidden">
             <TabletWorkGrid />
           </div>
           {/* Desktop: ≥ 800px — glass grid */}
-          <div className="hidden laptop:block">
+          <div className="hidden md:block">
             <DesktopWorkGrid />
           </div>
         </motion.div>
       </div>
 
-      <div className="hidden laptop:block">
+      <div className="hidden md:block">
         <ScrollTriggeredNewsletterMarquee />
       </div>
     </div>

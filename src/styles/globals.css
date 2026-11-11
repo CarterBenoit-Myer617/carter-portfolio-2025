@@ -180,6 +180,10 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  --breakpoint-tablet: 394px;
+  --breakpoint-laptop: 800px;
+  --breakpoint-desktop: 1340px;
+
   /* Spacing Tokens */
   --spacing-1: var(--space-1);
   --spacing-2: var(--space-2);

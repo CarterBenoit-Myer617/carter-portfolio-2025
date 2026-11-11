@@ -1,11 +1,19 @@
 # dependencies
 /node_modules
+docs/audit-runs/**/node_modules/
+
+# macOS
+.DS_Store
+**/.DS_Store
+*.alias
+*carter-portfolio-2025 alias
 
 # build
 /dist
+/build
 
-# misc
-.DS_Store
+# misc oversized drafts
+docs/content-about-rewrite.md
 *.pem
 
 # debug
@@ -23,7 +31,9 @@ voice-memos/
 video/
 
 # editor
-.cursor/
+.cursor/*
+!.cursor/agents/
+!.cursor/agents/**
 src/assets/*.png
 *.png
 *.zip
@@ -36,3 +46,20 @@ carterbenoitmyer.com/
 mcp-google-workspace/
 resume-system/
 public/projects/
+!public/_videos/
+!public/_videos/v1/
+!public/_videos/v1/91ab96c34fa0c95f363ae60fb0c46223c26175f4
+!public/videos/
+!public/videos/91ab96c34fa0c95f363ae60fb0c46223c26175f4.mp4
+public/videos/drexel-showcase-web-video-01.mp4
+!public/_assets/
+!public/_assets/v11/
+!public/_assets/v11/*.png
+!restored-media/
+!restored-media/*.png
+!restored-media/*.mp4
+restored-media/drexel-showcase-web-video-01.mp4
+!src/assets/3d22c680e7f293997abdc55a4f71f18d7a8fc1b6.png
+!src/assets/26b55ec5d5854f8fabe67986156459d338664124.png
+!src/assets/8dd641bb82dfe40cb27bbaa835c9a72ac356675f.png
+!src/assets/0952adc2a294ca3fe5826c32a6c842890eca2745.png
